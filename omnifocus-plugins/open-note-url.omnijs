@@ -37,3 +37,5 @@
 	
 	return action;
 })();
+
+// TODO: make this work for project notes as well
