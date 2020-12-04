@@ -1,0 +1,34 @@
+/*{
+    "author": "David Howell",
+    "targets": ["omnifocus"],
+    "type": "action",
+    "identifier": "io.howell.omnifocus.create-project-note",
+    "version": "0.1",
+    "description": "Creates and links a new Bear note for the project, populated by text in the note field.",
+    "label": "Open Project Note"
+}*/
+(() => {
+    var action = new PlugIn.Action(function(selection) {
+        let project = selection.projects[0];
+        
+        if (project.note.indexOf("bear://") === 0) {
+            // If the project already has a linked Bear note, just open it.
+            let bearLink = project.note.split(/\s+/)[0];
+            URL.fromString(bearLink).open();
+        } else {
+            // Invoke the Drafts action to create the note from project details.
+            URL.fromString("drafts://x-callback-url/runAction?text=&action=Create%20Project%20Note")
+                .call(
+                    (result) => {
+                        console.log(JSON.stringify(result));
+                    }, console.error);
+        }
+    });
+
+
+    action.validate = function(selection){
+        return selection.projects.length === 1;
+    };
+
+    return action;
+})();
