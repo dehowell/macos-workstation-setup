@@ -43,6 +43,7 @@
             var noteLink;
             URL.fromString(baseURL).call((response) => {
                 noteLink = `bear://x-callback-url/open-note?id=${response.identifier}`;
+				console.log("Created project note at " + noteLink);
                 project.note = noteLink;
                 URL.fromString(noteLink).open();
             });
@@ -55,3 +56,7 @@
 
     return action;
 })();
+
+/*
+ * TODO Add tags drawn from the folder hierarchy and/or the OmniFocus "Bear:" tag hierarchy 
+ */
