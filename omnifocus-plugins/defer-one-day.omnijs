@@ -1,0 +1,38 @@
+/*{
+    "author": "David Howell",
+    "targets": ["omnifocus"],
+    "type": "action",
+    "identifier": "io.howell.omnifocus.defer-one-day",
+    "version": "0.1",
+    "description": "Defer the selected tasks by one day.",
+    "label": "Defer One Day"
+}*/
+(() => {
+    const ONE_DAY = new DateComponents();
+    ONE_DAY.day = 1;
+
+    var today = function() {
+        let components = new DateComponents();
+        let now = Calendar.current.dateComponentsFromDate(new Date());
+        components.year = now.year;
+        components.month = now.month;
+        components.day = now.day;
+        return Calendar.current.dateFromDateComponents(components);
+    }
+
+    var action = new PlugIn.Action(function(selection) {
+        selection.tasks.forEach(task => {
+            task.deferDate = Calendar.current.dateByAddingDateComponents(
+                task.deferDate != null ? task.deferDate : today(),
+                ONE_DAY
+            );
+        });       
+    });
+
+    // If needed, uncomment, and add a function that returns true if the current selection is appropriate for the action.
+    action.validate = function(selection){
+        return selection.tasks.length > 0;
+    };
+        
+    return action;
+})();
