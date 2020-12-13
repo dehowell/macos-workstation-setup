@@ -17,7 +17,7 @@
             URL.fromString(bearLink).open();
         } else {
             
-            /* // Invoke the Drafts action to create the note from project details.
+            /*  // Invoke the Drafts action to create the note from project details.
                // doesn't work because drafts can't reply with x-success
             URL.fromString("drafts://x-callback-url/runAction?text=&action=Create%20Project%20Note")
                 .call(
