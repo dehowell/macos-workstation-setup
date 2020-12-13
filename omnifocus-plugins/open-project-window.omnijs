@@ -13,15 +13,13 @@
         document.newWindow().then(w => {
             w.perspective = Perspective.BuiltIn.Projects;
             w.selectObjects([project]);
-            if (app.platformName == "macOS") {
-                w.focus = [project];
-            }
+            w.focus = [project];
         });
 
     });
 
     action.validate = function(selection){
-        return selection.projects.length === 1;
+        return app.platformName == "macOS" && selection.projects.length === 1;
     };
 
     return action;
